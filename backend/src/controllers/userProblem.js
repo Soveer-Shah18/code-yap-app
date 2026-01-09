@@ -6,7 +6,6 @@ const SolutionVideo = require("../models/solutionVideo")
 
 const createProblem = async (req,res)=>{
    
-  // API request to authenticate user:
     const {title,description,difficulty,tags,
         visibleTestCases,hiddenTestCases,startCode,
         referenceSolution, problemCreator
@@ -16,16 +15,9 @@ const createProblem = async (req,res)=>{
     try{
        
       for(const {language,completeCode} of referenceSolution){
-         
-
-        // source_code:
-        // language_id:
-        // stdin: 
-        // expectedOutput:
 
         const languageId = getLanguageById(language);
           
-        // I am creating Batch submission
         const submissions = visibleTestCases.map((testcase)=>({
             source_code:completeCode,
             language_id: languageId,
@@ -33,13 +25,9 @@ const createProblem = async (req,res)=>{
             expected_output: testcase.output
         }));
 
-
         const submitResult = await submitBatch(submissions);
-        // console.log(submitResult);
 
         const resultToken = submitResult.map((value)=> value.token);
-
-        // ["db54881d-bcf5-4c7b-a2e3-d33fe7e25de7","ecc52a9b-ea80-4a00-ad50-4ab6cc3bb2a1","1b35ec3b-5776-48ef-b646-d5522bdeb2cc"]
         
        const testResult = await submitToken(resultToken);
 
@@ -53,9 +41,6 @@ const createProblem = async (req,res)=>{
        }
 
       }
-
-
-      // We can store it in our DB
 
     const userProblem =  await Problem.create({
         ...req.body,
@@ -91,15 +76,8 @@ const updateProblem = async (req,res)=>{
       
     for(const {language,completeCode} of referenceSolution){
          
-
-      // source_code:
-      // language_id:
-      // stdin: 
-      // expectedOutput:
-
       const languageId = getLanguageById(language);
         
-      // I am creating Batch submission
       const submissions = visibleTestCases.map((testcase)=>({
           source_code:completeCode,
           language_id: languageId,
@@ -109,13 +87,10 @@ const updateProblem = async (req,res)=>{
 
 
       const submitResult = await submitBatch(submissions);
-      // console.log(submitResult);
 
       const resultToken = submitResult.map((value)=> value.token);
 
-      // ["db54881d-bcf5-4c7b-a2e3-d33fe7e25de7","ecc52a9b-ea80-4a00-ad50-4ab6cc3bb2a1","1b35ec3b-5776-48ef-b646-d5522bdeb2cc"]
-      
-     const testResult = await submitToken(resultToken);
+      const testResult = await submitToken(resultToken);
 
     //  console.log(testResult);
 
@@ -126,7 +101,6 @@ const updateProblem = async (req,res)=>{
      }
 
     }
-
 
   const newProblem = await Problem.findByIdAndUpdate(id , {...req.body}, {runValidators:true, new:true});
    
@@ -169,8 +143,6 @@ const getProblemById = async(req,res)=>{
       return res.status(400).send("ID is Missing");
 
     const getProblem = await Problem.findById(id).select('_id title description difficulty tags visibleTestCases startCode referenceSolution ');
-   
-    // video ka jo bhi url wagera le aao
 
    if(!getProblem)
     return res.status(404).send("Problem is Missing");
@@ -254,8 +226,4 @@ const submittedProblem = async(req,res)=>{
   }
 }
 
-
-
 module.exports = {createProblem,updateProblem,deleteProblem,getProblemById,getAllProblem,solvedAllProblembyUser,submittedProblem};
-
-
