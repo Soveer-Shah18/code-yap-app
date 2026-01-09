@@ -40,7 +40,6 @@ const adminMiddleware = async (req,res,next)=>{
     catch(err){
         res.status(401).send("Error: "+ err.message)
     }
-
 }
 
 module.exports = adminMiddleware;
