@@ -8,6 +8,7 @@ const SubmissionHistory = ({ problemId }) => {
   const [selectedSubmission, setSelectedSubmission] = useState(null); //for checking the previous submitted code
 
   useEffect(() => {
+    if (!problemId) return;
     const fetchSubmissions = async () => {
       try {
         setLoading(true);
@@ -21,6 +22,12 @@ const SubmissionHistory = ({ problemId }) => {
         setLoading(false);
       }
     };
+
+  useEffect(() => {
+  return () => {
+    setSelectedSubmission(null);
+  };
+}, []);
 
     fetchSubmissions();
   }, [problemId]);
@@ -64,6 +71,20 @@ const SubmissionHistory = ({ problemId }) => {
       </div>
     );
   }
+
+  if (submissions.length === 0) {
+  return (
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        Submission History
+      </h2>
+
+      <div className="alert alert-info shadow-lg">
+        <span>No submissions yet</span>
+      </div>
+    </div>
+  );
+}
 
   return (
     <div className="container mx-auto p-4">
@@ -131,7 +152,7 @@ const SubmissionHistory = ({ problemId }) => {
 
       {/* Code View Modal */}
       {selectedSubmission && (
-        <div className="modal modal-open">
+        <div className={`modal ${selectedSubmission ? "modal-open" : ""}`}>
           <div className="modal-box w-11/12 max-w-5xl">
             <h3 className="font-bold text-lg mb-4">
               Submission Details: {selectedSubmission.language}
