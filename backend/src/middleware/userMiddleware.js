@@ -8,7 +8,7 @@ const userMiddleware = async (req,res,next)=>{
         
         const {token} = req.cookies;
 
-        console.log(req.cookies);
+        // console.log(req.cookies);
         if(!token)
             throw new Error("Token is not persent");
 

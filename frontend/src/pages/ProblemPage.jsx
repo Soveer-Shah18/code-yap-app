@@ -63,8 +63,6 @@ const ProblemPage = () => {
     }
   }, [selectedLanguage, problem]);
 
-
-
   const handleEditorChange = (value) => {
     setCode(value || '');
   };
