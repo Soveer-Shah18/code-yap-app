@@ -48,7 +48,7 @@ function Homepage() {
 
     const difficultyMatch = filters.difficulty === 'all' || problem.difficulty === filters.difficulty;
 
-    const tagMatch = filters.tag === 'all' || problem.tags === filters.tag;
+    const tagMatch = filters.tag === 'all' || problem.tags.includes(filters.tag);
 
     const statusMatch = filters.status === 'all' || solvedProblems.some(sp => sp._id === problem._id);
 
@@ -101,17 +101,23 @@ function Homepage() {
             <option value="hard">Hard</option>
           </select>
 
-          <select 
-            className="select select-bordered"
-            value={filters.tag}
-            onChange={(e) => setFilters({...filters, tag: e.target.value})}
-          >
-            <option value="all">All Tags</option>
-            <option value="array">Array</option>
-            <option value="linkedList">Linked List</option>
-            <option value="graph">Graph</option>
-            <option value="dp">DP</option>
-          </select>
+        <select
+           className="select select-bordered"
+           value={filters.tag}
+           onChange={(e) => setFilters({ ...filters, tag: e.target.value })}
+           >
+          <option value="all">All Tags</option>
+          <option value="array">Array</option>
+          <option value="string">String</option>
+          <option value="linkedList">Linked List</option>
+          <option value="stack">Stack</option>
+          <option value="queue">Queue</option>
+          <option value="hashing">Hashing</option>
+          <option value="tree">Tree</option>
+          <option value="graph">Graph</option>
+          <option value="dp">DP</option>
+      </select>
+
         </div>
 
         {/* Problems List */}
@@ -139,8 +145,12 @@ function Homepage() {
                   <div className={`badge ${getDifficultyBadgeColor(problem.difficulty)}`}>
                     {problem.difficulty}
                   </div>
-                  <div className="badge badge-info">
-                    {problem.tags}
+                  <div className="flex gap-2 flex-wrap">
+                   {problem.tags.map(tag => (
+                    <div key={tag} className="badge badge-info">
+                         {tag}
+                      </div>
+                      ))}
                   </div>
                 </div>
               </div>
