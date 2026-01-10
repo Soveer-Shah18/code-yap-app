@@ -15,11 +15,43 @@ const problemSchema = new Schema({
         enum:['easy','medium','hard'],
         required:true,
     },
-    tags:{
-        type:String,
-        enum:['array','linkedList','graph','dp','math'],
-        required:true
-    },
+    tags: {
+  type: String,
+  enum: [
+    'array',
+    'string',
+    'linkedList',
+    'stack',
+    'queue',
+    'hashing',
+    'heap',
+    'tree',
+    'graph',
+    'twoPointers',
+    'slidingWindow',
+    'binarySearch',
+    'sorting',
+    'greedy',
+    'recursion',
+    'backtracking',
+    'dp',
+    'divideAndConquer',
+    'math',
+    'bitManipulation',
+    'bfs',
+    'dfs',
+    'unionFind',
+    'shortestPath',
+    'topologicalSort',
+    'prefixSum',
+    'monotonicStack',
+    'trie',
+    'matrix',
+    'numberTheory'
+  ],
+  required: true
+}
+,
     visibleTestCases:[
         {
             input:{
